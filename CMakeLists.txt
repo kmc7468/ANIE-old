@@ -9,8 +9,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(INCLUDE_DIR "./include")
 set(SOURCE_DIR "./src")
 set(OUTPUT_DIR "./bin")
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+
+set(DYNAMIC_LINKING OFF CACHE BOOL "")
 
 include_directories(${INCLUDE_DIR})
 file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp)
@@ -18,5 +19,12 @@ file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp)
 add_definitions(-D__STDC_CONSTANT_MACROS)
 add_definitions(-D__STDC_LIMIT_MACROS)
 
-add_library(${PROJECT_NAME} ${SOURCE_LIST})
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+if(DYNAMIC_LINKING)
+	add_definitions(-DANIE_DYNAMIC)
+	add_library(${PROJECT_NAME} SHARED ${SOURCE_LIST})
+else()
+	add_library(${PROJECT_NAME} STATIC ${SOURCE_LIST})
+endif()
+
+install(DIRECTORY ${INCLUDE_DIR}/anie DESTINATION include)
+install(TARGETS ${PROJECT_NAME} DESTINATION lib)
