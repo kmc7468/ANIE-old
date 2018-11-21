@@ -8,7 +8,7 @@ namespace anie
 {
 	namespace details
 	{
-		class cpu_seq_device_t final : public device
+		class ANIE_EXPORT cpu_seq_device_t final : public device
 		{
 		public:
 			cpu_seq_device_t() noexcept = default;

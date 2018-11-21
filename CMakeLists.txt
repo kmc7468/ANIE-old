@@ -15,7 +15,7 @@ set(DYNAMIC_LINKING OFF CACHE BOOL "")
 set(ARITHMETIC_TYPE "" CACHE BOOL "double")
 
 include_directories(${INCLUDE_DIR})
-file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp)
+file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp ${SOURCE_DIR}/math/*.cpp)
 
 add_definitions(-D__STDC_CONSTANT_MACROS)
 add_definitions(-D__STDC_LIMIT_MACROS)
