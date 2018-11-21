@@ -20,6 +20,7 @@ file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp)
 add_definitions(-D__STDC_CONSTANT_MACROS)
 add_definitions(-D__STDC_LIMIT_MACROS)
 
+add_definitions(-DANIE_INTERNAL)
 add_definitions(-DANIE_ARITHMETIC_TYPE=${ARITHMETIC_TYPE})
 
 if(DYNAMIC_LINKING)
