@@ -12,12 +12,15 @@ set(OUTPUT_DIR "./bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
 
 set(DYNAMIC_LINKING OFF CACHE BOOL "")
+set(ARITHMETIC_TYPE "" CACHE BOOL "double")
 
 include_directories(${INCLUDE_DIR})
 file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp)
 
 add_definitions(-D__STDC_CONSTANT_MACROS)
 add_definitions(-D__STDC_LIMIT_MACROS)
+
+add_definitions(-DANIE_ARITHMETIC_TYPE=${ARITHMETIC_TYPE})
 
 if(DYNAMIC_LINKING)
 	add_definitions(-DANIE_DYNAMIC)
