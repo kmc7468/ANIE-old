@@ -2,7 +2,33 @@
 
 #include <utility>
 
-namespace anie
+namespace anie::details // vector_scalar_product
+{
+	vector_scalar_product::vector_scalar_product(const vector& lhs, const vector& rhs) noexcept
+		: lhs_(lhs), rhs_(rhs)
+	{}
+
+	std::any vector_scalar_product::run() const
+	{
+		reader_lock_guard lhs_guard(lhs_.mutex);
+		reader_lock_guard rhs_guard(rhs_.mutex);
+
+		arithemtic_type result = 0;
+
+		for (std::size_t i = 0; lhs_.size(); ++i)
+		{
+			result += lhs_[i] * rhs_[i];
+		}
+
+		return result;
+	}
+	std::string_view vector_scalar_product::kernel() const
+	{
+		return std::string_view(); // TODO
+	}
+}
+
+namespace anie // vector
 {
 	vector::vector() noexcept
 	{}
@@ -55,6 +81,10 @@ namespace anie
 	{
 		data_ = ilist;
 		return *this;
+	}
+	details::vector_scalar_product vector::operator*(const vector& vector) const noexcept
+	{
+		return { *this, vector };
 	}
 	const arithemtic_type& vector::operator[](std::size_t index) const noexcept
 	{

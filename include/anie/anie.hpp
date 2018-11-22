@@ -1,3 +1,4 @@
+#include <anie/command.hpp>
 #include <anie/device.hpp>
 #include <anie/mutex.hpp>
 

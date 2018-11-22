@@ -155,7 +155,7 @@ namespace anie
 	class lock_guard final
 	{
 	public:
-		explicit lock_guard(mutex_base_ptr& mutex) noexcept;
+		explicit lock_guard(const mutex_base_ptr& mutex) noexcept;
 		lock_guard(const lock_guard& guard) = delete;
 		lock_guard(lock_guard&& guard) = delete;
 		~lock_guard();
@@ -167,13 +167,13 @@ namespace anie
 		bool operator!=(const lock_guard& guard) = delete;
 
 	private:
-		mutex_base_ptr& mutex_;
+		const mutex_base_ptr& mutex_;
 	};
 
 	class ANIE_EXPORT reader_lock_guard final
 	{
 	public:
-		explicit reader_lock_guard(mutex_base_ptr& mutex) noexcept;
+		explicit reader_lock_guard(const mutex_base_ptr& mutex) noexcept;
 		reader_lock_guard(const reader_lock_guard& guard) = delete;
 		reader_lock_guard(reader_lock_guard&& guard) = delete;
 		~reader_lock_guard();
@@ -185,7 +185,7 @@ namespace anie
 		bool operator!=(const reader_lock_guard& guard) = delete;
 
 	private:
-		mutex_base_ptr& mutex_;
+		const mutex_base_ptr& mutex_;
 	};
 }
 

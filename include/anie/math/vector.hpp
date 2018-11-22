@@ -2,14 +2,45 @@
 #define ANIE_HEADER_MATH_VECTOR_HPP
 #include <anie/config.hpp>
 
+#include <anie/command.hpp>
 #include <anie/mutex.hpp>
 
+#include <any>
 #include <cstddef>
 #include <initializer_list>
+#include <string_view>
 #include <vector>
 
 namespace anie
 {
+	class vector;
+
+	namespace details
+	{
+		class ANIE_EXPORT vector_scalar_product final : public command
+		{
+		public:
+			vector_scalar_product(const vector& lhs, const vector& rhs) noexcept;
+			vector_scalar_product(const vector_scalar_product& command) = delete;
+			vector_scalar_product(vector_scalar_product&& command) = delete;
+			virtual ~vector_scalar_product() override = default;
+
+		public:
+			vector_scalar_product& operator=(const vector_scalar_product& command) = delete;
+			vector_scalar_product& operator=(vector_scalar_product&& command) = delete;
+			bool operator==(const vector_scalar_product& command) = delete;
+			bool operator!=(const vector_scalar_product& command) = delete;
+
+		public:
+			virtual std::any run() const override;
+			virtual std::string_view kernel() const override;
+
+		private:
+			const vector& lhs_;
+			const vector& rhs_;
+		};
+	}
+
 	class ANIE_EXPORT vector final
 	{
 	public:
@@ -43,6 +74,7 @@ namespace anie
 		vector& operator=(std::initializer_list<arithemtic_type> ilist);
 		bool operator==(const vector& vector) = delete;
 		bool operator!=(const vector& vector) = delete;
+		details::vector_scalar_product operator*(const vector& vector) const noexcept;
 		const arithemtic_type& operator[](std::size_t index) const noexcept;
 		arithemtic_type& operator[](std::size_t index) noexcept;
 

@@ -152,7 +152,7 @@ namespace anie // empty_mutex
 
 namespace anie // lock_guard
 {
-	lock_guard::lock_guard(mutex_base_ptr& mutex) noexcept
+	lock_guard::lock_guard(const mutex_base_ptr& mutex) noexcept
 		: mutex_(mutex)
 	{
 		mutex_->writer_lock();
@@ -165,7 +165,7 @@ namespace anie // lock_guard
 
 namespace anie // reader_lock_guard
 {
-	reader_lock_guard::reader_lock_guard(mutex_base_ptr& mutex) noexcept
+	reader_lock_guard::reader_lock_guard(const mutex_base_ptr& mutex) noexcept
 		: mutex_(mutex)
 	{
 		mutex_->reader_lock();
