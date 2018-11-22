@@ -1,5 +1,7 @@
 #include <anie/math/vector.hpp>
 
+#include <cassert>
+#include <stdexcept>
 #include <utility>
 
 namespace anie::details // vector_scalar_product
@@ -15,7 +17,7 @@ namespace anie::details // vector_scalar_product
 
 		arithemtic_type result = 0;
 
-		for (std::size_t i = 0; lhs_.size(); ++i)
+		for (std::size_t i = 0; i < lhs_.size(); ++i)
 		{
 			result += lhs_[i] * rhs_[i];
 		}
@@ -84,6 +86,7 @@ namespace anie // vector
 	}
 	details::vector_scalar_product vector::operator*(const vector& vector) const noexcept
 	{
+		assert(size() == vector.size());
 		return { *this, vector };
 	}
 	const arithemtic_type& vector::operator[](std::size_t index) const noexcept
@@ -167,5 +170,13 @@ namespace anie // vector
 	vector::const_reverse_iterator vector::crend() const noexcept
 	{
 		return data_.crend();
+	}
+
+	details::vector_scalar_product vector::scalar_product(const vector& vector) const
+	{
+		if (size() != vector.size())
+			throw std::invalid_argument("size() == vector.size()");
+
+		return { *this, vector };
 	}
 }

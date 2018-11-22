@@ -2,7 +2,11 @@
 #define ANIE_HEADER_DEVICES_CPU_SEQ_DEVICE_HPP
 #include <anie/config.hpp>
 
+#include <anie/command.hpp>
 #include <anie/device.hpp>
+
+#include <any>
+#include <future>
 
 namespace anie
 {
@@ -21,6 +25,9 @@ namespace anie
 			cpu_seq_device_t& operator=(cpu_seq_device_t&& device) = delete;
 			bool operator==(const cpu_seq_device_t& device) = delete;
 			bool operator!=(const cpu_seq_device_t& device) = delete;
+
+		public:
+			virtual std::future<std::any> enqueue(const command& command) override;
 		};
 	}
 

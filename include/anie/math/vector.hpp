@@ -99,6 +99,8 @@ namespace anie
 		const_reverse_iterator rend() const noexcept;
 		const_reverse_iterator crend() const noexcept;
 
+		details::vector_scalar_product scalar_product(const vector& vector) const;
+
 	public:
 		const mutex_base_ptr mutex = make_empty_mutex();
 
