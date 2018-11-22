@@ -2,6 +2,8 @@
 #define ANIE_HEADER_MATH_VECTOR_HPP
 #include <anie/config.hpp>
 
+#include <anie/mutex.hpp>
+
 #include <cstddef>
 #include <initializer_list>
 #include <vector>
@@ -23,7 +25,9 @@ namespace anie
 
 	public:
 		vector() noexcept;
+		explicit vector(mutex_base_ptr&& mutex);
 		explicit vector(std::size_t size);
+		vector(mutex_base_ptr&& mutex, std::size_t size);
 		vector(const std::vector<arithemtic_type>& vector);
 		vector(std::vector<arithemtic_type>&& vector) noexcept;
 		vector(const vector& vector);
@@ -62,6 +66,9 @@ namespace anie
 		reverse_iterator rend() noexcept;
 		const_reverse_iterator rend() const noexcept;
 		const_reverse_iterator crend() const noexcept;
+
+	public:
+		const mutex_base_ptr mutex = make_empty_mutex();
 
 	private:
 		std::vector<arithemtic_type> data_;

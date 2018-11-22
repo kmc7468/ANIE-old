@@ -6,8 +6,14 @@ namespace anie
 {
 	vector::vector() noexcept
 	{}
+	vector::vector(mutex_base_ptr&& mutex)
+		: mutex(std::move(mutex))
+	{}
 	vector::vector(std::size_t size)
 		: data_(size)
+	{}
+	vector::vector(mutex_base_ptr&& mutex, std::size_t size)
+		: mutex(std::move(mutex)), data_(size)
 	{}
 	vector::vector(const std::vector<arithemtic_type>& vector)
 		: data_(vector)

@@ -1,4 +1,3 @@
-#include <anie/command_queue.hpp>
 #include <anie/device.hpp>
 #include <anie/mutex.hpp>
 
