@@ -31,4 +31,5 @@ namespace anie
 	};
 }
 
+#include <anie/activation_layers/sigmoid.hpp>
 #endif

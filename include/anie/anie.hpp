@@ -1,6 +1,7 @@
 #include <anie/activation_layer.hpp>
 #include <anie/command.hpp>
 #include <anie/device.hpp>
+#include <anie/fully_connected_layer.hpp>
 #include <anie/layer.hpp>
 #include <anie/mutex.hpp>
 #include <anie/network.hpp>

@@ -33,5 +33,5 @@ namespace anie
 	using device_ptr = std::shared_ptr<device>;
 }
 
-//#include <anie/devices/cpu_seq_device.hpp>
+#include <anie/devices/cpu_seq_device.hpp>
 #endif
