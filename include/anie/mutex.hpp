@@ -27,13 +27,13 @@ namespace anie
 		bool operator!=(const mutex_base& mutex) = delete;
 
 	public:
-		virtual void reader_lock() = 0;
-		virtual void writer_lock() = 0;
-		virtual void reader_unlock() = 0;
-		virtual void writer_unlock() = 0;
-		virtual bool reader_try_lock() = 0;
-		virtual bool writer_try_lock() = 0;
-		virtual void* native_handle() = 0;
+		virtual void reader_lock() noexcept = 0;
+		virtual void writer_lock() noexcept = 0;
+		virtual void reader_unlock() noexcept = 0;
+		virtual void writer_unlock() noexcept = 0;
+		virtual bool reader_try_lock() noexcept = 0;
+		virtual bool writer_try_lock() noexcept = 0;
+		virtual void* native_handle() noexcept = 0;
 	};
 
 	using mutex_base_ptr = std::unique_ptr<mutex_base>;
@@ -53,13 +53,13 @@ namespace anie
 		bool operator!=(const mutex& mutex) = delete;
 
 	public:
-		virtual void reader_lock() override;
-		virtual void writer_lock() override;
-		virtual void reader_unlock() override;
-		virtual void writer_unlock() override;
-		virtual bool reader_try_lock() override;
-		virtual bool writer_try_lock() override;
-		virtual void* native_handle() override;
+		virtual void reader_lock() noexcept override;
+		virtual void writer_lock() noexcept override;
+		virtual void reader_unlock() noexcept override;
+		virtual void writer_unlock() noexcept override;
+		virtual bool reader_try_lock() noexcept override;
+		virtual bool writer_try_lock() noexcept override;
+		virtual void* native_handle() noexcept override;
 
 	private:
 		std::mutex mutex_;
@@ -82,13 +82,13 @@ namespace anie
 		bool operator!=(const shared_mutex& mutex) = delete;
 
 	public:
-		virtual void reader_lock() override;
-		virtual void writer_lock() override;
-		virtual void reader_unlock() override;
-		virtual void writer_unlock() override;
-		virtual bool reader_try_lock() override;
-		virtual bool writer_try_lock() override;
-		virtual void* native_handle() override;
+		virtual void reader_lock() noexcept override;
+		virtual void writer_lock() noexcept override;
+		virtual void reader_unlock() noexcept override;
+		virtual void writer_unlock() noexcept override;
+		virtual bool reader_try_lock() noexcept override;
+		virtual bool writer_try_lock() noexcept override;
+		virtual void* native_handle() noexcept override;
 
 	private:
 		std::shared_mutex mutex_;
@@ -111,13 +111,13 @@ namespace anie
 		bool operator!=(const shared_mutex2& mutex) = delete;
 
 	public:
-		virtual void reader_lock() override;
-		virtual void writer_lock() override;
-		virtual void reader_unlock() override;
-		virtual void writer_unlock() override;
-		virtual bool reader_try_lock() override;
-		virtual bool writer_try_lock() override;
-		virtual void* native_handle() override;
+		virtual void reader_lock() noexcept override;
+		virtual void writer_lock() noexcept override;
+		virtual void reader_unlock() noexcept override;
+		virtual void writer_unlock() noexcept override;
+		virtual bool reader_try_lock() noexcept override;
+		virtual bool writer_try_lock() noexcept override;
+		virtual void* native_handle() noexcept override;
 
 	private:
 		std::shared_mutex mutex_;
@@ -125,6 +125,42 @@ namespace anie
 	};
 
 	mutex_base_ptr make_shared_mutex2();
+
+	class lock_guard final
+	{
+	public:
+		explicit lock_guard(mutex_base_ptr& mutex) noexcept;
+		lock_guard(const lock_guard& guard) = delete;
+		lock_guard(lock_guard&& guard) = delete;
+		~lock_guard();
+
+	public:
+		lock_guard& operator=(const lock_guard& guard) = delete;
+		lock_guard& operator=(lock_guard&& guard) = delete;
+		bool operator==(const lock_guard& guard) = delete;
+		bool operator!=(const lock_guard& guard) = delete;
+
+	private:
+		mutex_base_ptr& mutex_;
+	};
+
+	class reader_lock_guard final
+	{
+	public:
+		explicit reader_lock_guard(mutex_base_ptr& mutex) noexcept;
+		reader_lock_guard(const reader_lock_guard& guard) = delete;
+		reader_lock_guard(reader_lock_guard&& guard) = delete;
+		~reader_lock_guard();
+
+	public:
+		reader_lock_guard& operator=(const reader_lock_guard& guard) = delete;
+		reader_lock_guard& operator=(reader_lock_guard&& guard) = delete;
+		bool operator==(const reader_lock_guard& guard) = delete;
+		bool operator!=(const reader_lock_guard& guard) = delete;
+
+	private:
+		mutex_base_ptr& mutex_;
+	};
 }
 
 #endif
