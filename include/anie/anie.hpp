@@ -3,6 +3,7 @@
 #include <anie/device.hpp>
 #include <anie/layer.hpp>
 #include <anie/mutex.hpp>
+#include <anie/network.hpp>
 
 #include <anie/activation_layers/sigmoid.hpp>
 
