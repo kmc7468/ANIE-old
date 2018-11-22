@@ -31,6 +31,10 @@ namespace anie
 	};
 
 	using command_queue_ptr = std::shared_ptr<command_queue>;
+	
+	template<typename... Args_>
+	command_queue_ptr make_command_queue(Args_&&... args);
 }
 
+#include "details/command_queue.hpp"
 #endif
