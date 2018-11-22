@@ -65,7 +65,7 @@ namespace anie
 		std::mutex mutex_;
 	};
 
-	mutex_base_ptr make_mutex();
+	ANIE_EXPORT mutex_base_ptr make_mutex();
 
 	class ANIE_EXPORT shared_mutex final : public mutex_base
 	{
@@ -94,7 +94,7 @@ namespace anie
 		std::shared_mutex mutex_;
 	};
 
-	mutex_base_ptr make_shared_mutex();
+	ANIE_EXPORT mutex_base_ptr make_shared_mutex();
 
 	class ANIE_EXPORT shared_mutex2 final : public mutex_base
 	{
@@ -124,7 +124,33 @@ namespace anie
 		std::atomic<std::size_t> waiting_writer_count_;
 	};
 
-	mutex_base_ptr make_shared_mutex2();
+	ANIE_EXPORT mutex_base_ptr make_shared_mutex2();
+
+	class ANIE_EXPORT empty_mutex final : public mutex_base
+	{
+	public:
+		empty_mutex() = default;
+		empty_mutex(const empty_mutex& mutex) = delete;
+		empty_mutex(empty_mutex&& mutex) = delete;
+		virtual ~empty_mutex() override = default;
+
+	public:
+		empty_mutex& operator=(const empty_mutex& mutex) = delete;
+		empty_mutex& operator=(empty_mutex&& mutex) = delete;
+		bool operator==(const empty_mutex& mutex) = delete;
+		bool operator!=(const empty_mutex& mutex) = delete;
+
+	public:
+		virtual void reader_lock() noexcept override;
+		virtual void writer_lock() noexcept override;
+		virtual void reader_unlock() noexcept override;
+		virtual void writer_unlock() noexcept override;
+		virtual bool reader_try_lock() noexcept override;
+		virtual bool writer_try_lock() noexcept override;
+		virtual void* native_handle() noexcept override;
+	};
+
+	ANIE_EXPORT mutex_base_ptr make_empty_mutex();
 
 	class lock_guard final
 	{
@@ -144,7 +170,7 @@ namespace anie
 		mutex_base_ptr& mutex_;
 	};
 
-	class reader_lock_guard final
+	class ANIE_EXPORT reader_lock_guard final
 	{
 	public:
 		explicit reader_lock_guard(mutex_base_ptr& mutex) noexcept;

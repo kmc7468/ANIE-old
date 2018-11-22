@@ -120,6 +120,36 @@ namespace anie // shared_mutex2
 	}
 }
 
+namespace anie // empty_mutex
+{
+	void empty_mutex::reader_lock() noexcept
+	{}
+	void empty_mutex::writer_lock() noexcept
+	{}
+	void empty_mutex::reader_unlock() noexcept
+	{}
+	void empty_mutex::writer_unlock() noexcept
+	{}
+	bool empty_mutex::reader_try_lock() noexcept
+	{
+		return true;
+	}
+	bool empty_mutex::writer_try_lock() noexcept
+	{
+		return true;
+	}
+
+	void* empty_mutex::native_handle() noexcept
+	{
+		return nullptr;
+	}
+
+	mutex_base_ptr make_empty_mutex()
+	{
+		return std::make_unique<empty_mutex>();
+	}
+}
+
 namespace anie // lock_guard
 {
 	lock_guard::lock_guard(mutex_base_ptr& mutex) noexcept
