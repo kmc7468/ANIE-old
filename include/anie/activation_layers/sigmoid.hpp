@@ -24,7 +24,7 @@ namespace anie
 		bool operator!=(const sigmoid_layer& layer) = delete;
 
 	protected:
-		virtual vector function(const vector& vector) const override;
+		virtual arithemtic_type function(const arithemtic_type& x) const override;
 	};
 
 	static inline const layer_ptr sigmoid = std::make_shared<sigmoid_layer>();

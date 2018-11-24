@@ -27,7 +27,7 @@ namespace anie
 		virtual vector forward(const vector& vector) const override;
 
 	protected:
-		virtual vector function(const vector& vector) const = 0;
+		virtual arithemtic_type function(const arithemtic_type& x) const = 0;
 	};
 }
 
