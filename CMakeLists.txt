@@ -12,10 +12,13 @@ set(OUTPUT_DIR "./bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
 
 set(DYNAMIC_LINKING OFF CACHE BOOL "")
-set(ARITHMETIC_TYPE "" CACHE BOOL "double")
+set(ARITHMETIC_TYPE "double" CACHE BOOL "")
+
+find_package(OpenCL REQUIRED)
+include_directories(${OpenCL_INCLUDE_DIRS})
 
 include_directories(${INCLUDE_DIR})
-file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp ${SOURCE_DIR}/devices/*.cpp ${SOURCE_DIR}/math/*.cpp)
+file(GLOB SOURCE_LIST ${SOURCE_DIR}/*.cpp ${SOURCE_DIR}/activation_layers/*.cpp ${SOURCE_DIR}/devices/*.cpp ${SOURCE_DIR}/math/*.cpp)
 
 add_definitions(-D__STDC_CONSTANT_MACROS)
 add_definitions(-D__STDC_LIMIT_MACROS)
@@ -29,6 +32,7 @@ if(DYNAMIC_LINKING)
 else()
 	add_library(${PROJECT_NAME} STATIC ${SOURCE_LIST})
 endif()
+target_link_libraries(${PROJECT_NAME} ${OpenCL_LIBRARIES})
 
 install(DIRECTORY ${INCLUDE_DIR}/anie DESTINATION include)
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
