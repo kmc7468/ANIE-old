@@ -1,5 +1,7 @@
 #include <anie/devices/cpu_seq_device.hpp>
 
+#include <cstdlib>
+
 namespace anie::details
 {
 	std::future<std::any> cpu_seq_device_t::enqueue(const command& command)
@@ -9,5 +11,13 @@ namespace anie::details
 
 		promise.set_value(command.run());
 		return future;
+	}
+	void* cpu_seq_device_t::create_buffer(std::size_t size)
+	{
+		return std::malloc(size);
+	}
+	void cpu_seq_device_t::release_buffer(void* buffer)
+	{
+		std::free(buffer);
 	}
 }

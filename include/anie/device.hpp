@@ -5,6 +5,7 @@
 #include <anie/command.hpp>
 
 #include <any>
+#include <cstddef>
 #include <future>
 #include <memory>
 
@@ -28,10 +29,12 @@ namespace anie
 
 	public:
 		virtual std::future<std::any> enqueue(const command& command) = 0;
+		virtual void* create_buffer(std::size_t size) = 0;
+		virtual void release_buffer(void* buffer) = 0;
 	};
 
 	using device_ptr = std::shared_ptr<device>;
 }
 
-#include <anie/devices/cpu_seq_device.hpp>
+//#include <anie/devices/cpu_seq_device.hpp>
 #endif
