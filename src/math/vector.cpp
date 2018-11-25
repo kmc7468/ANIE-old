@@ -34,7 +34,7 @@ namespace anie // vector
 {
 	vector::vector() noexcept
 	{}
-	vector::vector(mutex_base_ptr&& mutex)
+	vector::vector(mutex_base_ptr&& mutex) noexcept
 		: mutex(std::move(mutex))
 	{}
 	vector::vector(std::size_t size)

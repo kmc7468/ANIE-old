@@ -56,7 +56,7 @@ namespace anie
 
 	public:
 		vector() noexcept;
-		explicit vector(mutex_base_ptr&& mutex);
+		explicit vector(mutex_base_ptr&& mutex) noexcept;
 		explicit vector(std::size_t size);
 		vector(mutex_base_ptr&& mutex, std::size_t size);
 		vector(const std::vector<arithemtic_type>& vector);
