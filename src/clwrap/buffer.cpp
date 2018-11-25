@@ -14,6 +14,13 @@ namespace anie::clwrap
 		release();
 	}
 
+	buffer::buffer(device* device, void* main_memory) noexcept
+		: device_(device), data_(main_memory)
+	{}
+	buffer::buffer(device* device, cl_mem main_memory) noexcept
+		: device_(device), data_(main_memory)
+	{}
+
 	buffer& buffer::operator=(buffer&& buffer) noexcept
 	{
 		release();
@@ -45,7 +52,7 @@ namespace anie::clwrap
 			break;
 		}
 
-		device_.reset();
+		device_ = nullptr;
 		data_ = std::monostate();
 	}
 	bool buffer::main_memory() const noexcept

@@ -4,6 +4,7 @@
 
 #include <anie/command.hpp>
 #include <anie/device.hpp>
+#include <anie/clwrap/buffer.hpp>
 
 #include <any>
 #include <future>
@@ -28,7 +29,7 @@ namespace anie
 
 		public:
 			virtual std::future<std::any> enqueue(const command& command) override;
-			virtual void* create_buffer(std::size_t size) override;
+			virtual clwrap::buffer create_buffer(std::size_t size) override;
 			virtual void release_buffer(void* buffer) override;
 		};
 	}

@@ -3,11 +3,13 @@
 #include <anie/config.hpp>
 
 #include <anie/command.hpp>
+#include <anie/clwrap/buffer.hpp>
 
 #include <any>
 #include <cstddef>
 #include <future>
 #include <memory>
+#include <CL/cl.h>
 
 namespace anie
 {
@@ -29,12 +31,16 @@ namespace anie
 
 	public:
 		virtual std::future<std::any> enqueue(const command& command) = 0;
-		virtual void* create_buffer(std::size_t size) = 0;
+		virtual clwrap::buffer create_buffer(std::size_t size) = 0;
 		virtual void release_buffer(void* buffer) = 0;
+
+	protected:
+		clwrap::buffer create_buffer_instance(void* main_memory);
+		clwrap::buffer create_buffer_instance(cl_mem main_memory);
 	};
 
 	using device_ptr = std::shared_ptr<device>;
 }
 
-//#include <anie/devices/cpu_seq_device.hpp>
+#include <anie/devices/cpu_seq_device.hpp>
 #endif

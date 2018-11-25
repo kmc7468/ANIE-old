@@ -12,9 +12,9 @@ namespace anie::details
 		promise.set_value(command.run());
 		return future;
 	}
-	void* cpu_seq_device_t::create_buffer(std::size_t size)
+	clwrap::buffer cpu_seq_device_t::create_buffer(std::size_t size)
 	{
-		return std::malloc(size);
+		return create_buffer_instance(std::malloc(size));
 	}
 	void cpu_seq_device_t::release_buffer(void* buffer)
 	{
