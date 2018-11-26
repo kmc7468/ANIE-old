@@ -1,6 +1,6 @@
 #include <anie/fully_connected_layer.hpp>
 
-#include <anie/devices/cpu_seq_device.hpp>
+#include <anie/devices/cpu_seq.hpp>
 
 #include <any>
 #include <random>
@@ -44,7 +44,7 @@ namespace anie
 
 		for (std::size_t i = 0; i < result.size(); ++i)
 		{
-			result[i] = std::any_cast<arithemtic_type>(cpu_seq_device->enqueue(weights_[i] * vector).get()) + bias_[i]; // TODO
+			result[i] = std::any_cast<arithemtic_type>(cpu_seq->enqueue(weights_[i] * vector).get()) + bias_[i]; // TODO
 		}
 
 		return result;

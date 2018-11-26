@@ -38,9 +38,7 @@ namespace anie
 		clwrap::buffer create_buffer_instance(void* main_memory);
 		clwrap::buffer create_buffer_instance(cl_mem main_memory);
 	};
-
-	using device_ptr = std::shared_ptr<device>;
 }
 
-#include <anie/devices/cpu_seq_device.hpp>
+#include <anie/devices/cpu_seq.hpp>
 #endif

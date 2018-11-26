@@ -10,7 +10,7 @@
 
 #include <anie/clwrap/buffer.hpp>
 
-#include <anie/devices/cpu_seq_device.hpp>
+#include <anie/devices/cpu_seq.hpp>
 
 #include <anie/math/matrix.hpp>
 #include <anie/math/vector.hpp>
