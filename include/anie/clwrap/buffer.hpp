@@ -38,9 +38,15 @@ namespace anie::clwrap
 		bool empty() const noexcept;
 		void release() noexcept;
 		bool main_memory() const noexcept;
+		bool video_memory() const noexcept;
+
+	public:
+		device* device() const noexcept;
+		void* address() const noexcept;
+		cl_mem handle() const noexcept;
 
 	private:
-		device* device_;
+		anie::device* device_;
 		std::variant<std::monostate, void*, cl_mem> data_;
 	};
 }

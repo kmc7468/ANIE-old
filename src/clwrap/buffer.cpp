@@ -14,10 +14,10 @@ namespace anie::clwrap
 		release();
 	}
 
-	buffer::buffer(device* device, void* main_memory) noexcept
+	buffer::buffer(anie::device* device, void* main_memory) noexcept
 		: device_(device), data_(main_memory)
 	{}
-	buffer::buffer(device* device, cl_mem main_memory) noexcept
+	buffer::buffer(anie::device* device, cl_mem main_memory) noexcept
 		: device_(device), data_(main_memory)
 	{}
 
@@ -58,5 +58,24 @@ namespace anie::clwrap
 	bool buffer::main_memory() const noexcept
 	{
 		return data_.index() == 1;
+	}
+	bool buffer::video_memory() const noexcept
+	{
+		return data_.index() == 2;
+	}
+
+	device* buffer::device() const noexcept
+	{
+		return device_;
+	}
+	void* buffer::address() const noexcept
+	{
+		if (main_memory()) return std::get<1>(data_);
+		else return nullptr;
+	}
+	cl_mem buffer::handle() const noexcept
+	{
+		if (video_memory()) return std::get<2>(data_);
+		else return nullptr;
 	}
 }
