@@ -1,6 +1,7 @@
 #include <anie/devices/cpu_seq.hpp>
 
 #include <cstdlib>
+#include <new>
 
 namespace anie::details
 {
@@ -14,10 +15,16 @@ namespace anie::details
 	}
 	clwrap::buffer cpu_seq_t::create_buffer(std::size_t size)
 	{
-		return create_buffer_instance(std::malloc(size));
+		if (void* const buffer = std::malloc(size); buffer)
+			return create_buffer_instance(buffer);
+		
+		throw std::bad_alloc();
 	}
-	void cpu_seq_t::release_buffer(void* buffer)
+	void cpu_seq_t::release_buffer(void* buffer) noexcept
 	{
-		std::free(buffer);
+		if (buffer)
+		{
+			std::free(buffer);
+		}
 	}
 }

@@ -30,7 +30,7 @@ namespace anie
 		public:
 			virtual std::future<std::any> enqueue(const command& command) override;
 			virtual clwrap::buffer create_buffer(std::size_t size) override;
-			virtual void release_buffer(void* buffer) override;
+			virtual void release_buffer(void* buffer) noexcept override;
 		};
 	}
 
