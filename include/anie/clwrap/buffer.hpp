@@ -40,6 +40,8 @@ namespace anie::clwrap
 		bool main_memory() const noexcept;
 		bool video_memory() const noexcept;
 
+		void copy_to(buffer& buffer, std::size_t size) const;
+
 	public:
 		device* device() const noexcept;
 		void* address() const noexcept;

@@ -7,7 +7,9 @@
 #include <anie/clwrap/buffer.hpp>
 
 #include <any>
+#include <cstddef>
 #include <future>
+#include <CL/cl.h>
 
 namespace anie
 {
@@ -31,6 +33,8 @@ namespace anie
 			virtual std::future<std::any> enqueue(const command& command) override;
 			virtual clwrap::buffer create_buffer(std::size_t size) override;
 			virtual void release_buffer(void* buffer) noexcept override;
+			virtual void copy_buffer_to_main_memory(const clwrap::buffer& buffer, void* address, std::size_t size) override;
+			virtual void copy_main_memory_to_buffer(clwrap::buffer& buffer, const void* address, std::size_t size) override;
 		};
 	}
 

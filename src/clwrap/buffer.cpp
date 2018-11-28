@@ -1,7 +1,10 @@
 #include <anie/clwrap/buffer.hpp>
 
 #include <anie/device.hpp>
+#include <anie/devices/cpu_seq.hpp>
 
+#include <algorithm>
+#include <cstdint>
 #include <utility>
 
 namespace anie::clwrap
@@ -62,6 +65,32 @@ namespace anie::clwrap
 	bool buffer::video_memory() const noexcept
 	{
 		return data_.index() == 2;
+	}
+
+	void buffer::copy_to(buffer& buffer, std::size_t size) const
+	{
+		switch (buffer.data_.index())
+		{
+		case 1:
+			device_->copy_buffer_to_main_memory(*this, buffer.address(), size);
+			break;
+
+		case 2:
+		{
+			switch (data_.index())
+			{
+			case 1:
+				buffer.device_->copy_main_memory_to_buffer(buffer, address(), size);
+				break;
+
+			case 2:
+				clwrap::buffer cpu_buf = cpu_seq->create_buffer(size);
+				device_->copy_buffer_to_main_memory(*this, buffer.address(), size);
+				buffer.device_->copy_main_memory_to_buffer(buffer, cpu_buf.address(), size);
+				break;
+			}
+		}
+		}
 	}
 
 	device* buffer::device() const noexcept

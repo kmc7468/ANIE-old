@@ -1,5 +1,7 @@
 #include <anie/devices/cpu_seq.hpp>
 
+#include <algorithm>
+#include <cstdint>
 #include <cstdlib>
 #include <new>
 
@@ -26,5 +28,19 @@ namespace anie::details
 		{
 			std::free(buffer);
 		}
+	}
+	void cpu_seq_t::copy_buffer_to_main_memory(const clwrap::buffer& buffer, void* address, std::size_t size)
+	{
+		if (buffer.empty()) return;
+
+		const std::uint8_t* const buffer_b = reinterpret_cast<const std::uint8_t*>(buffer.address());
+		std::copy(buffer_b, buffer_b + size, reinterpret_cast<std::uint8_t*>(address));
+	}
+	void cpu_seq_t::copy_main_memory_to_buffer(clwrap::buffer& buffer, const void* address, std::size_t size)
+	{
+		if (buffer.empty()) return;
+
+		const std::uint8_t* const address_b = reinterpret_cast<const std::uint8_t*>(address);
+		std::copy(address_b, address_b + size, reinterpret_cast<std::uint8_t*>(buffer.address()));
 	}
 }
